@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
 * This program takes input from a file,
@@ -34,35 +35,36 @@ public final class ReverseString {
 
     public static void main(String[] args) {
 
-        // Create input file
-        final File inputFile = new File("input.txt");
-
         try {
-            // Creating the file into a String variable
+
+            final ArrayList<String> input = new ArrayList<String>();
+
+            // Create input file.
+            final File inputFile = new File("input.txt");
+            // Create output
+            final FileWriter outputFile = new FileWriter("output.txt");
+
+            // Creating the file into a String variable.
             final Scanner sc = new Scanner(inputFile);
 
-            // Create String object to convert the file to
-            final String input = sc.useDelimiter("\\Z").next();
-
-            try {
-                // Create output file
-                final FileWriter outputFile = new FileWriter("output.txt");
-
-                // Write and print the reversed text to the output file.
-                outputFile.write(reverse(input));
-                System.out.println("Output text: " + reverse(input));
-
-                // Closing FileWriter
-                outputFile.close();
-
-            } catch (IOException exception) {
-                System.out.println("Error");
+            while (sc.hasNextLine()) {
+                // Add each line of the file to the ArrayList.
+                input.add(sc.nextLine());
             }
+
+            for (String strLine : input) {
+                // Write and print the reversed text to the output file.
+                outputFile.write(reverse(strLine) + "\n");
+                System.out.println(reverse(strLine));
+
+            }
+            // Closing FileWriter
+            outputFile.close();
 
             // Closing Scanner
             sc.close();
 
-        } catch (FileNotFoundException exception) {
+        } catch (IOException exception) {
             System.out.println("Error: File does not exist.");
         }
     }
